@@ -4,7 +4,7 @@ class Api::V1::ItemsController < ApplicationController
       item = Item.create(item_params)
       render json: ItemSerializer.render(item), status: 201
     else
-      render status: 400
+      render status: 422
     end
   end
 

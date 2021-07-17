@@ -40,7 +40,7 @@ RSpec.describe 'item creation' do
     json_body = { "name": "new item", "unit_price": 1, "merchant_id": merchant.id}
 
     post api_v1_items_path, params: json_body
-    
-    expect(response.status).to eq(400)
+
+    expect(response.status).to eq(422)
   end
 end
