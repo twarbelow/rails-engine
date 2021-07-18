@@ -4,7 +4,15 @@ class Api::V1::ItemsController < ApplicationController
     if item.save
       render json: ItemSerializer.render(item), status: 201
     else
-      render status: 422
+      render status: 400
+    end
+  end
+
+  def destroy
+    begin
+      Item.destroy(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      render status: 404
     end
   end
 
