@@ -1,7 +1,7 @@
 class Api::V1::ItemsController < ApplicationController
   def create
-    if item_params.keys.count == 4
-      item = Item.create(item_params)
+    item = Item.new(item_params)
+    if item.save
       render json: ItemSerializer.render(item), status: 201
     else
       render status: 422
