@@ -11,13 +11,11 @@ RSpec.describe 'item creation' do
 
     reply = JSON.parse(response.body, symbolize_names: true)
 
-    expect(reply).to have_key(:data)
-    expect(reply[:data]).to have_key(:id)
-    expect(reply[:data]).to have_key(:type)
-    expect(reply[:data]).to have_key(:attributes)
-    expect(reply[:data][:attributes]).to have_key(:name)
-    expect(reply[:data][:attributes]).to have_key(:description)
-    expect(reply[:data][:attributes]).to have_key(:unit_price)
+    expect(reply[:data][:id]).to be_an(Integer)
+    expect(reply[:data][:type]).to eq("item")
+    expect(reply[:data][:attributes][:name]).to eq(json_body[:name])
+    expect(reply[:data][:attributes][:description]).to eq(json_body[:description])
+    expect(reply[:data][:attributes][:unit_price]).to eq(json_body[:unit_price])
   end
 
   it 'ignores any extra attributes sent in the request body' do
@@ -43,4 +41,12 @@ RSpec.describe 'item creation' do
 
     expect(response.status).to eq(422)
   end
+
+  it 'returns an error if correct attributes have unexpected value types' do
+    json_body = { "name": 1, "description": 5.2, "unit_price": "tacos", "merchant_id": "pickle"}
+
+    post api_v1_items_path, params: json_body
+
+    expect(response.status).to eq(422)
+end
 end
