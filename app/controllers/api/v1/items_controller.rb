@@ -8,6 +8,17 @@ class Api::V1::ItemsController < ApplicationController
     end
   end
 
+  def update
+    item = Item.find(params[:id])
+    item.update_attributes(item_params)
+    if item.save
+      render json: ItemSerializer.render(item), status: 200
+    else
+      render status: 400
+    end
+
+  end
+
   def destroy
     begin
       Item.destroy(params[:id])
