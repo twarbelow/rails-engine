@@ -48,5 +48,5 @@ RSpec.describe 'item creation' do
     post api_v1_items_path, params: json_body
 
     expect(response.status).to eq(422)
-end
+  end
 end
