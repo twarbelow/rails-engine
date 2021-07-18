@@ -9,4 +9,9 @@ FactoryBot.define do
     unit_price { Faker::Commerce.price }
     association :merchant
   end
+
+  factory :invoice do
+    association :merchant
+    status { Faker::Name.name}
+  end
 end
