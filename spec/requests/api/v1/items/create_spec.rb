@@ -39,7 +39,7 @@ RSpec.describe 'item creation' do
 
     post api_v1_items_path, params: json_body
 
-    expect(response.status).to eq(422)
+    expect(response.status).to eq(400)
   end
 
   it 'returns an error if correct attributes have unexpected value types' do
@@ -47,6 +47,6 @@ RSpec.describe 'item creation' do
 
     post api_v1_items_path, params: json_body
 
-    expect(response.status).to eq(422)
-end
+    expect(response.status).to eq(400)
+  end
 end
