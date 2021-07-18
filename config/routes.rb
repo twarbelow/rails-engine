@@ -4,7 +4,8 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       # post "items", to: 'items#create'
-      resources :items, only: [:create, :destroy]
+      resources :items, only: [:create, :update, :destroy]
+      # patch "items/:id", to: 'items#update'
     end
   end
 end
