@@ -17,6 +17,20 @@ RSpec.describe 'delete item' do
 
     expect(response.status).to eq(404)
   end
-  # it 'deletes associated invoices where the item is the only item on that invoice' do
-  # end
+
+  it 'deletes associated invoices where the item is the only item on that invoice' do
+    item1 = create(:item)
+    item2 = create(:item)
+    invoice1 = create(:invoice)
+    invoice2 = create(:invoice)
+    InvoiceItem.create!(item_id: item1.id, invoice_id: invoice1.id, quantity: 1, unit_price: 1)
+    InvoiceItem.create!(item_id: item2.id, invoice_id: invoice1.id, quantity: 1, unit_price: 1)
+    InvoiceItem.create!(item_id: item1.id, invoice_id: invoice2.id, quantity: 1, unit_price: 1)
+
+    delete "/api/v1/items/#{item1.id}"
+
+    expect(response.status).to eq(204)
+
+    expect{Invoice.find(invoice2.id)}.to raise_error(ActiveRecord::RecordNotFound)
+  end
 end
