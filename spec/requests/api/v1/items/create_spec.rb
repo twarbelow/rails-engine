@@ -16,6 +16,8 @@ RSpec.describe 'item creation' do
     expect(reply[:data][:attributes][:name]).to eq(json_body[:name])
     expect(reply[:data][:attributes][:description]).to eq(json_body[:description])
     expect(reply[:data][:attributes][:unit_price]).to eq(json_body[:unit_price])
+    expect(reply[:data][:attributes][:merchant_id]).to eq(merchant.id)
+
   end
 
   it 'ignores any extra attributes sent in the request body' do
