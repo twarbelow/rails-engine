@@ -8,6 +8,20 @@ class Api::V1::ItemsController < ApplicationController
     end
   end
 
+  def update
+    begin
+      # return render status: 400 unless item_params.keys.all? { |k| Item.column_names.include?(k) }
+      item = Item.find(params[:id])
+      item.update_attributes!(item_params)
+      item.save
+      render json: ItemSerializer.render(item), status: 200
+    rescue ActiveRecord::RecordNotFound
+      render status: 404
+    rescue ActiveRecord::RecordInvalid
+      render status: 400
+    end
+  end
+
   def destroy
     begin
       Item.destroy(params[:id])
