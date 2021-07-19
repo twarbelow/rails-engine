@@ -3,9 +3,8 @@ Rails.application.routes.draw do
   # post "/api/v1/items", to: 'api/v1/items#create'
   namespace :api do
     namespace :v1 do
-      # post "items", to: 'items#create'
       resources :items, only: [:create, :update, :destroy, :show]
-      # patch "items/:id", to: 'items#update'
+      resources :merchants, only: [:show]
     end
   end
 end
