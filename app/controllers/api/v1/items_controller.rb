@@ -1,15 +1,12 @@
 class Api::V1::ItemsController < ApplicationController
   def show
-    render json: ItemSerializer.render(Item.find(params[:id])), status: 200
+    item_id = params[:id]
+    render json: ItemSerializer.render(Item.find(item_id)), status: 200
   end
 
   def create
-    item = Item.new(item_params)
-    if item.save
-      render json: ItemSerializer.render(item), status: 201
-    else
-      render status: 400
-    end
+    item = Item.create!(item_params)
+    render json: ItemSerializer.render(item), status: 201
   end
 
   def update
