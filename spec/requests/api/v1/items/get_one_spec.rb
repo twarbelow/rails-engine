@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'get one item' do
   it 'returns item information when provided a valid id' do
     item = create(:item)
-    get "/api/v1/item/#{item.id}"
+    get api_v1_item_path(item.id)
 
     expect(response.status).to eq(200)
 
@@ -17,17 +17,17 @@ RSpec.describe 'get one item' do
     expect(reply[:data][:attributes][:merchant_id]).to eq(item.merchant_id)
   end
 
-  it 'returns 404 when provided with invalid id integer' do
-    get "/api/v1/item/123234345"
-
-    expect(response.status).to eq(404)
-  end
-
-  it 'returns 404 when provided with string for id' do
-    get "/api/v1/item/these-are-words"
-
-    expect(response.status).to eq(404)
-  end
+  # it 'returns 404 when provided with invalid id integer' do
+  #   get "/api/v1/items/123234345"
+  #
+  #   expect(response.status).to eq(404)
+  # end
+  #
+  # it 'returns 404 when provided with string for id' do
+  #   get "/api/v1/items/these-are-words"
+  #
+  #   expect(response.status).to eq(404)
+  # end
 end
 
 
