@@ -17,20 +17,15 @@ RSpec.describe 'get one item' do
     expect(reply[:data][:attributes][:merchant_id]).to eq(item.merchant_id)
   end
 
-  # it 'returns 404 when provided with invalid id integer' do
-  #   get "/api/v1/items/123234345"
-  #
-  #   expect(response.status).to eq(404)
-  # end
-  #
-  # it 'returns 404 when provided with string for id' do
-  #   get "/api/v1/items/these-are-words"
-  #
-  #   expect(response.status).to eq(404)
-  # end
+  it 'returns 404 when provided with invalid id integer' do
+    get "/api/v1/items/123234345"
+
+    expect(response.status).to eq(404)
+  end
+
+  it 'returns 404 when provided with string for id' do
+    get "/api/v1/items/these-are-words"
+
+    expect(response.status).to eq(404)
+  end
 end
-
-
-# GET /api/v1/items/:id
-# return { “data”: { “id”: “16”, “type”: “item”, attributes”: { “name”: “New Widget”, “description”: “High quality widget”, “unit_price”: 200.99}}}
-# return 404 not found if that id doesn't exist
