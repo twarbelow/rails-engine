@@ -1,7 +1,7 @@
 class Api::V1::ItemsController < ApplicationController
   def show
-    item = Item.find(params[:id])
-    render json: ItemSerializer.render(item), status: 200
+    Item.find(params[:id])
+    render json: ItemSerializer.render(Item.find(params[:id])), status: 200
   end
 
   def create
@@ -14,25 +14,14 @@ class Api::V1::ItemsController < ApplicationController
   end
 
   def update
-    begin
-      # return render status: 400 unless item_params.keys.all? { |k| Item.column_names.include?(k) }
-      item = Item.find(params[:id])
-      item.update_attributes!(item_params)
-      item.save
-      render json: ItemSerializer.render(item), status: 200
-    rescue ActiveRecord::RecordNotFound
-      render status: 404
-    rescue ActiveRecord::RecordInvalid
-      render status: 400
-    end
+    item = Item.find(params[:id])
+    item.update_attributes!(item_params)
+    item.save
+    render json: ItemSerializer.render(item), status: 200
   end
 
   def destroy
-    begin
-      Item.destroy(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      render status: 404
-    end
+    Item.destroy(params[:id])
   end
 
   private
