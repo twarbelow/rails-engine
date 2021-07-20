@@ -9,7 +9,7 @@ RSpec.describe 'get one item' do
 
     reply = JSON.parse(response.body, symbolize_names: :true)
 
-    expect(reply[:data][:id]).to eq(item.id)
+    expect(reply[:data][:id]).to eq(item.id.to_s)
     expect(reply[:data][:type]).to eq("item")
     expect(reply[:data][:attributes][:name]).to eq(item.name)
     expect(reply[:data][:attributes][:description]).to eq(item.description)

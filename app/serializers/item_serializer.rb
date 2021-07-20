@@ -2,7 +2,7 @@ class ItemSerializer
   def self.render(item)
     {
       "data": {
-        "id": item.id,
+        "id": item.id.to_s,
         "type": "item",
         "attributes": {
           "name": item.name,

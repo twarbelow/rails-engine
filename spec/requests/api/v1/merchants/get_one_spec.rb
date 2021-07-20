@@ -9,7 +9,7 @@ RSpec.describe 'get one merchant' do
 
     reply = JSON.parse(response.body, symbolize_names: :true)
 
-    expect(reply[:data][:id]).to eq(merchant.id)
+    expect(reply[:data][:id]).to eq(merchant.id.to_s)
     expect(reply[:data][:type]).to eq("merchant")
     expect(reply[:data][:attributes][:name]).to eq(merchant.name)
   end
