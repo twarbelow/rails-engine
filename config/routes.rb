@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     namespace :v1 do
 
       get '/items/find', to: 'items#find'
-      get '/merchands/find_all', to: 'merchants#find_all'
+      get '/merchants/find_all', to: 'merchants#find_all'
 
       resources :items, only: [:create, :update, :destroy, :show]
 
