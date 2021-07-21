@@ -14,7 +14,7 @@ class Api::V1::ItemsController < ApplicationController
       if item
         render json: ItemSerializer.render(item), status: 200
       else
-        render json: ItemSerializer.render_empty, status: 200
+        render json: ItemSerializer.render_empty, status: 404
       end
     else
       render status: 400
