@@ -48,5 +48,3 @@ RSpec.describe 'search for all merchants' do
     expect(response.status).to eq(400)
   end
 end
-#  the user can send ?name=ring and it will search the name field in the database table
-#  the search data in the name query parameter should require the database to do a case-insensitive search for text fields
