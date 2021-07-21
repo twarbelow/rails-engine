@@ -8,8 +8,7 @@ RSpec.describe 'search for an item' do
     Item.create!(name: "Thing", description: "bring the things", unit_price: 10 , merchant_id: merchant.id )
     Item.create!(name: "Rocking Horse", description: "certainly not uninspiring", unit_price: 10 , merchant_id: merchant.id )
 
-    get "/api/v1/items/find?name=ring"
-    # get api_v1_items_find_path(name: "ring")
+    get api_v1_items_find_path(name: "ring")
 
     expect(response.status).to eq(200)
 
@@ -44,6 +43,9 @@ RSpec.describe 'search for an item' do
   #
   # it 'cannot search by name and price' do
   #   get "/api/v1/items/find?name=ring&min_price=50"
+  # end
+  #
+  # it 'cannot responsd to invalid params' do
   # end
 end
 

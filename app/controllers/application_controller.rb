@@ -5,7 +5,7 @@ class ApplicationController < ActionController::API
   def record_not_found
     render status: 404
   end
-  
+
   def record_invalid
     render status: 400
   end
