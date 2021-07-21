@@ -36,13 +36,13 @@ RSpec.describe 'search for all merchants' do
     expect(reply[:data].count).to eq(0)
   end
 
-  xit 'param cannot be empty' do
+  it 'param cannot be empty' do
     get api_v1_merchants_find_all_path(name: '')
 
     expect(response.status).to eq(400)
   end
 
-  xit 'param cannot be missing' do
+  it 'param cannot be missing' do
     get api_v1_merchants_find_all_path()
 
     expect(response.status).to eq(400)

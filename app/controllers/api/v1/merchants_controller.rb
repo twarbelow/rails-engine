@@ -5,7 +5,11 @@ class Api::V1::MerchantsController < ApplicationController
   end
 
   def find_all
-    merchants = Merchant.where("name ILIKE ?", "%#{params[:name]}%").order(:name)
-    render json: MerchantSerializer.render_all(merchants)
+    if params[:name] && !params[:name].empty?
+      merchants = Merchant.where("name ILIKE ?", "%#{params[:name]}%").order(:name)
+      render json: MerchantSerializer.render_all(merchants)
+    else
+      render status: 400
+    end
   end
 end
