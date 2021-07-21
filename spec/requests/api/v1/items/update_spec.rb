@@ -11,7 +11,7 @@ RSpec.describe 'update item' do
 
     reply = JSON.parse(response.body, symbolize_names: true)
 
-    expect(reply[:data][:id]).to be_an(Integer)
+    expect(reply[:data][:id]).to be_a(String)
     expect(reply[:data][:type]).to eq("item")
     expect(reply[:data][:attributes][:name]).to eq(json_body[:name])
     expect(reply[:data][:attributes][:description]).to eq(json_body[:description])
@@ -37,7 +37,7 @@ RSpec.describe 'update item' do
 
     reply = JSON.parse(response.body, symbolize_names: true)
 
-    expect(reply[:data][:id]).to be_an(Integer)
+    expect(reply[:data][:id]).to be_a(String)
     expect(reply[:data][:type]).to eq("item")
     expect(reply[:data][:attributes][:name]).to eq(item.name)
     expect(reply[:data][:attributes][:description]).to eq(item.description)
