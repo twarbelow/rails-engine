@@ -3,7 +3,7 @@ class ItemSerializer
     {
       "data": {
         "id": item.id.to_s,
-        "type": "item",
+        "type": 'item',
         "attributes": {
           "name": item.name,
           "description": item.description,
@@ -18,7 +18,7 @@ class ItemSerializer
     {
       "data": {
         "id": nil,
-        "type": "item",
+        "type": 'item',
         "attributes": {
           "name": nil,
           "description": nil,

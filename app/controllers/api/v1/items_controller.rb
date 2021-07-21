@@ -1,41 +1,39 @@
 class Api::V1::ItemsController < ApplicationController
   def find
     if valid_params?
-      if params[:name]
-        # class methods for item "get_by_whatever", pass the params in
-        item = Item.where("name ILIKE ? OR description ILIKE ?", "%#{params[:name]}%", "%#{params[:name]}%").order(:name).first
-      elsif params[:min_price] && !params[:max_price]
-        item = Item.where("unit_price >= ?", params[:min_price]).order(:name).first
-      elsif params[:max_price]
-        item = Item.where("unit_price <= ?", params[:max_price]).order(:name).first
-      else
-        item = Item.where(unit_price: params[:min_price]..params[:max_price]).order(:name).first
-      end
-      if item
-        render json: ItemSerializer.render(item), status: 200
-      else
-        render json: ItemSerializer.render_empty, status: 404
-      end
+      item = if params[:name]
+               # class methods for item "get_by_whatever", pass the params in
+               Item.where('name ILIKE ? OR description ILIKE ?', "%#{params[:name]}%",
+                          "%#{params[:name]}%").order(:name).first
+             elsif params[:min_price] && !params[:max_price]
+               Item.where('unit_price >= ?', params[:min_price]).order(:name).first
+             elsif params[:max_price]
+               Item.where('unit_price <= ?', params[:max_price]).order(:name).first
+             else
+               Item.where(unit_price: params[:min_price]..params[:max_price]).order(:name).first
+             end
+      render json: ItemSerializer.render(item), status: :ok if item
+      render json: ItemSerializer.render_empty, status: :not_found unless item
     else
-      render status: 400
+      render status: :bad_request
     end
   end
 
   def show
     item = Item.find(params[:id])
-    render json: ItemSerializer.render(item), status: 200
+    render json: ItemSerializer.render(item), status: :ok
   end
 
   def create
     item = Item.create!(item_params)
-    render json: ItemSerializer.render(item), status: 201
+    render json: ItemSerializer.render(item), status: :created
   end
 
   def update
     item = Item.find(params[:id])
-    item.update_attributes!(item_params)
+    item.update!(item_params)
     item.save
-    render json: ItemSerializer.render(item), status: 200
+    render json: ItemSerializer.render(item), status: :ok
   end
 
   def destroy

@@ -6,10 +6,10 @@ class Api::V1::MerchantsController < ApplicationController
 
   def find_all
     if valid_params?
-      merchants = Merchant.where("name ILIKE ?", "%#{params[:name]}%").order(:name)
+      merchants = Merchant.where('name ILIKE ?', "%#{params[:name]}%").order(:name)
       render json: MerchantSerializer.render_all(merchants)
     else
-      render status: 400
+      render status: :bad_request
     end
   end
 
