@@ -4,7 +4,7 @@ RSpec.describe 'search for all merchants' do
     merchant1 = Merchant.create!(name: "Ring")
     merchant2 = Merchant.create!(name: "ring")
     merchant3 = Merchant.create!(name: "Thing")
-    merchant4 = Merchant.create!(name: "Horse")
+    Merchant.create!(name: "Horse")
 
     get api_v1_merchants_find_all_path(name: "ing")
 
