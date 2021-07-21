@@ -34,6 +34,8 @@ class Api::V1::ItemsController < ApplicationController
   end
 
   def valid_params?
-    (params[:min_price] || params[:max_price] && !params[:name]) || (params[:name] && !params[:max_price] && !params[:min_price])
+    price = (params[:min_price] || params[:max_price]) && !params[:name]
+    name = params[:name] && !params[:max_price] && !params[:min_price]
+    price || name
   end
 end
