@@ -13,4 +13,19 @@ class ItemSerializer
       }
     }
   end
+
+  def self.render_empty
+    {
+      "data": {
+        "id": nil,
+        "type": "item",
+        "attributes": {
+          "name": nil,
+          "description": nil,
+          "unit_price": nil,
+          "merchant_id": nil
+        }
+      }
+    }
+  end
 end
