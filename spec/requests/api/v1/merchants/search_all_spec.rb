@@ -24,13 +24,16 @@ RSpec.describe 'search for all merchants' do
     expect(reply[:data][2][:type]).to eq("merchant")
     expect(reply[:data][2][:attributes][:name]).to eq(merchant2.name)
   end
-#  returns { "data": [ { "id": "4", "type": "merchant", "attributes": { "name": "Ring World" } }, { "id": "1", "type": "merchant", "attributes": { "name": "Turing School" } } ] }
-  xit 'returns ampty array if no matches are found' do
+
+  it 'returns empty array if no matches are found' do
     get api_v1_merchants_find_all_path(name: 'NOPE-NO-MATCHES')
 
-    expect(response.status).to eq(404)
+    expect(response.status).to eq(200)
 
-    expect(reply[:data][0]).to be(empty)
+    reply = JSON.parse(response.body, symbolize_names: :true)
+
+    expect(reply[:data]).to be_an(Array)
+    expect(reply[:data].count).to eq(0)
   end
 
   xit 'param cannot be empty' do
