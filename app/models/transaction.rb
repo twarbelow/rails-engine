@@ -1,8 +1,8 @@
 class Transaction < ApplicationRecord
-  validates_presence_of :invoice_id
+  validates :invoice_id, presence: true
   # validates_presence_of :credit_card_number
   # validates_presence_of :credit_card_expiration
-  validates_presence_of :result
+  validates :result, presence: true
 
   belongs_to :invoice
 end
