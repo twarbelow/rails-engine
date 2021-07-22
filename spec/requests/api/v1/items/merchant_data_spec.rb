@@ -1,9 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe 'get merchant' do
-  it 'returns merchant information when provided a valid id' do
+RSpec.describe 'get /api/v1/items/:id/merchant' do
+  it 'returns the merchant associated with that item id' do
     merchant = create(:merchant)
-    get api_v1_merchant_path(merchant.id)
+    item = create(:item, merchant_id: merchant.id)
+
+    get "/api/v1/items/#{item.id}/merchant"
 
     expect(response.status).to eq(200)
 
@@ -14,14 +16,8 @@ RSpec.describe 'get merchant' do
     expect(reply[:data][:attributes][:name]).to eq(merchant.name)
   end
 
-  it 'returns 404 when provided with invalid id integer' do
-    get "/api/v1/merchants/123234345"
-
-    expect(response.status).to eq(404)
-  end
-
-  it 'returns 404 when provided with string for id' do
-    get "/api/v1/merchants/these-are-words"
+  it 'returns 404 if that item is not found' do
+    get "/api/v1/items/123234/merchant"
 
     expect(response.status).to eq(404)
   end
