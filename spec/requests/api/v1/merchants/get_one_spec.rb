@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'get one merchant' do
+RSpec.describe 'get merchant' do
   it 'returns merchant information when provided a valid id' do
     merchant = create(:merchant)
     get api_v1_merchant_path(merchant.id)
