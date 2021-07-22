@@ -11,12 +11,12 @@ RSpec.describe 'get /api/v1/items/:id/merchant' do
 
     reply = JSON.parse(response.body, symbolize_names: :true)
 
-    expect(reply[:data][:id]).to eq(merchant.id)
+    expect(reply[:data][:id]).to eq(merchant.id.to_s)
     expect(reply[:data][:type]).to eq("merchant")
     expect(reply[:data][:attributes][:name]).to eq(merchant.name)
   end
 
-  xit 'returns 404 if that item is not found' do
+  it 'returns 404 if that item is not found' do
     get "/api/v1/items/123234/merchant"
 
     expect(response.status).to eq(404)
