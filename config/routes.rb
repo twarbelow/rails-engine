@@ -3,9 +3,9 @@ Rails.application.routes.draw do
   # post "/api/v1/items", to: 'api/v1/items#create'
   namespace :api do
     namespace :v1 do
-
       get '/items/find', to: 'items#find'
       get '/merchants/find_all', to: 'merchants#find_all'
+      get '/merchants/revenue/:id', to: 'revenue#total_for_merchant'
 
       resources :items, only: [:create, :update, :destroy, :show]
 
