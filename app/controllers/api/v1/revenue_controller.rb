@@ -1,14 +1,7 @@
 class Api::V1::RevenueController < ApplicationController
   def total_for_merchant
     merchant = Merchant.find(params[:id])
-    shipped_invoices = merchant.invoices.joins(:transactions).where( 'transactions.result = ? AND invoices.status = ?', 'success',  'shipped')
-    invoice_items = shipped_invoices.map do |item|
-      item.invoice_items
-    end
-    revenue = 0
-    invoice_items.each do |invoiceitem|
-      revenue += invoiceitem.sum( 'unit_price * quantity' )
-    end
+    revenue = merchant.invoices.joins(:transactions, :invoice_items).where( 'transactions.result = ? AND invoices.status = ?', 'success',  'shipped' ).sum( 'invoice_items.unit_price * invoice_items.quantity' )
     render json: RevenueSerializer.merchant_total(merchant.id, revenue)
   end
 end

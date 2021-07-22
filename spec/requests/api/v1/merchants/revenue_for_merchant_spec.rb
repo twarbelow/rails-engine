@@ -37,15 +37,4 @@ RSpec.describe 'single merchant revenue' do
 
     expect(response.status).to eq(404)
   end
-  # no merchant with that id
-  # any other sad/edge?
 end
-# {
-#   "data": {
-#     "id": "42",
-#     "type": "merchant_revenue",
-#     "attributes": {
-#       "revenue"  : 532613.9800000001
-#     }
-#   }
-# }
