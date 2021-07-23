@@ -45,11 +45,26 @@ class Api::V1::ItemsController < ApplicationController
 
   def valid_params?
     price = (params[:min_price] || params[:max_price]) && !params[:name]
-    if price
-      return false if params[:min_price] && params[:min_price].to_i < 0
-      return false if params[:max_price] && params[:max_price].to_i < 0
-    end
     name = params[:name] && !params[:max_price] && !params[:min_price]
+    return valid_price? if price
+    return valid_name? if name
+
     price || name
+  end
+
+  def valid_price?
+    return false if params[:min_price] && params[:min_price].to_i.negative?
+    return false if params[:max_price] && params[:max_price].to_i.negative?
+    return false if (params[:max_price] && params[:min_price]) && params[:max_price].to_i < params[:min_price].to_i
+    return false if params[:min_price] && params[:min_price].empty?
+    return false if params[:max_price] && params[:max_price].empty?
+
+    true
+  end
+
+  def valid_name?
+    return false if params[:name] && params[:name].empty?
+
+    true
   end
 end
