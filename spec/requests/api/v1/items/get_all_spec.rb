@@ -48,4 +48,3 @@ RSpec.describe '/api/v1/items?per_page=<numbers>&page=<number>' do
     expect(reply[:data]).to match_array([])
   end
 end
-# NOT include dependent data of the resource (eg, if you’re fetching merchants, do not send any data about merchant’s items or invoices)
