@@ -12,6 +12,14 @@ class Item < ApplicationRecord
   has_many :invoice_items, dependent: :destroy
   has_many :invoices, through: :invoice_items
 
+  def self.paginated_items(page, per_page)
+    if page.zero?
+      Item.limit(per_page)
+    else
+      Item.limit(per_page).offset((page - 1) * per_page)
+    end
+  end
+
   private
 
   def remove_empty_invoices
