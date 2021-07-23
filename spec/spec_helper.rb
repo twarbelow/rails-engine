@@ -1,5 +1,5 @@
 require 'simplecov'
-SimpleCov.
+SimpleCov.start
 
 RSpec.configure do |config|
 
