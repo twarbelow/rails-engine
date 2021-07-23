@@ -95,7 +95,7 @@ RSpec.describe 'search for an item' do
     expect(reply[:data][:attributes][:merchant_id]).to eq(nil)
 
   end
-  
+
   it 'cannot search by name and price' do
     get "/api/v1/items/find?name=ring&min_price=50"
 
@@ -105,6 +105,16 @@ RSpec.describe 'search for an item' do
   it 'cannot respond to invalid params' do
     get "/api/v1/items/find?pandas=ring&cats=1000"
 
+    expect(response.status).to eq(400)
+  end
+
+  it 'responds with 400 if min_price is not positive' do
+    get "/api/v1/items/find?min_price=-1"
+    expect(response.status).to eq(400)
+  end
+
+  it 'responds with 400 if max_price is not positive' do
+    get "/api/v1/items/find?max_price=-1"
     expect(response.status).to eq(400)
   end
 end
