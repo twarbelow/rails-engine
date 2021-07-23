@@ -2,11 +2,7 @@ class Api::V1::ItemsController < ApplicationController
   def index
     per_page = params.fetch(:per_page, 20).to_i
     page = params.fetch(:page, 0).to_i
-    items = if page.zero?
-              Item.limit(per_page)
-            else
-              Item.limit(per_page).offset((page - 1) * per_page)
-            end
+    items = Item.paginated_items(page, per_page)
     render json: ItemSerializer.render_all(items), status: :ok
   end
 
@@ -33,17 +29,7 @@ class Api::V1::ItemsController < ApplicationController
 
   def find
     if valid_params?
-      item = if params[:name]
-               # class methods for item "get_by_whatever", pass the params in
-               Item.where('name ILIKE ? OR description ILIKE ?', "%#{params[:name]}%",
-                          "%#{params[:name]}%").order(:name).first
-             elsif params[:min_price] && !params[:max_price]
-               Item.where('unit_price >= ?', params[:min_price]).order(:name).first
-             elsif params[:max_price]
-               Item.where('unit_price <= ?', params[:max_price]).order(:name).first
-             else
-               Item.where(unit_price: params[:min_price]..params[:max_price]).order(:name).first
-             end
+      item = Item.get_by_params(params[:name], params[:min_price], params[:max_price])
       render json: ItemSerializer.render(item), status: :ok if item
       render json: ItemSerializer.render_empty, status: :not_found unless item
     else

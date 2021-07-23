@@ -2,13 +2,10 @@ class Api::V1::MerchantsController < ApplicationController
   def index
     per_page = params.fetch(:per_page, 20).to_i
     page = params.fetch(:page, 0).to_i
-    merchants = if page.zero?
-              Merchant.limit(per_page)
-            else
-              Merchant.limit(per_page).offset((page - 1) * per_page)
-            end
+    merchants = Merchant.paginated_merchants(page, per_page)
     render json: MerchantSerializer.render_all(merchants), status: :ok
   end
+
   def show
     merchant = Merchant.find(params[:id])
     render json: MerchantSerializer.render(merchant)
