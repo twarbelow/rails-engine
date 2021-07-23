@@ -117,4 +117,24 @@ RSpec.describe 'search for an item' do
     get "/api/v1/items/find?max_price=-1"
     expect(response.status).to eq(400)
   end
+
+  it 'responds with 400 if max_price is smaller than min_price' do
+    get "/api/v1/items/find?max_price=10&min_price=20"
+    expect(response.status).to eq(400)
+  end
+
+  it 'responds with 400 if name does not have value' do
+    get "/api/v1/items/find?name="
+    expect(response.status).to eq(400)
+  end
+
+  it 'responds with 400 if min_price does not have value' do
+    get "/api/v1/items/find?min_price="
+    expect(response.status).to eq(400)
+  end
+
+  it 'responds with 400 if max_price does not have value' do
+    get "/api/v1/items/find?max_price="
+    expect(response.status).to eq(400)
+  end
 end
