@@ -8,10 +8,3 @@ class Api::V1::RevenueController < ApplicationController
     render json: RevenueSerializer.merchant_total(merchant.id, revenue)
   end
 end
-
-# merchant.invoices.joins(:transactions).where( result: 'success', status: 'shipped')
-#
-# find invoices where
-# (result: success) from transactions table && (status: shipped) from invoices table
-# get the invoiceitems from the resulting invoices
-# sum the unit_price times the quantity on all relevant invoiceitems
