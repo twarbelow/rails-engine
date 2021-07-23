@@ -29,7 +29,7 @@ class Api::V1::ItemsController < ApplicationController
 
   def find
     if valid_params?
-      item = Item.find_by_params(params[:name], params[:min_price], params[:max_price])
+      item = Item.get_by_params(params[:name], params[:min_price], params[:max_price])
       render json: ItemSerializer.render(item), status: :ok if item
       render json: ItemSerializer.render_empty, status: :not_found unless item
     else

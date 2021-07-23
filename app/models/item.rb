@@ -20,15 +20,15 @@ class Item < ApplicationRecord
     end
   end
 
-  def self.find_by_params(name = nil, min = nil, max = nil)
+  def self.get_by_params(name = nil, min = nil, max = nil)
     if name
-     Item.where('name ILIKE ? OR description ILIKE ?', "%#{name}%", "%#{name}%").order(:name).first
+      Item.where('name ILIKE ? OR description ILIKE ?', "%#{name}%", "%#{name}%").order(:name).first
     elsif min && !max
-     Item.where('unit_price >= ?', min).order(:name).first
+      Item.where('unit_price >= ?', min).order(:name).first
     elsif max
-     Item.where('unit_price <= ?', max).order(:name).first
+      Item.where('unit_price <= ?', max).order(:name).first
     else
-     Item.where(unit_price: min..max).order(:name).first
+      Item.where(unit_price: min..max).order(:name).first
     end
   end
 
