@@ -13,4 +13,11 @@ class Merchant < ApplicationRecord
               .offset((page - 1) * per_page)
     end
   end
+
+  def self.revenue_total(merchant)
+    merchant.invoices
+            .joins(:transactions, :invoice_items)
+            .where('transactions.result = ? AND invoices.status = ?', 'success', 'shipped')
+            .sum('invoice_items.unit_price * invoice_items.quantity')
+  end
 end
