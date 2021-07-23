@@ -29,17 +29,7 @@ class Api::V1::ItemsController < ApplicationController
 
   def find
     if valid_params?
-      item = if params[:name]
-               # class methods for item "get_by_whatever", pass the params in
-               Item.where('name ILIKE ? OR description ILIKE ?', "%#{params[:name]}%",
-                          "%#{params[:name]}%").order(:name).first
-             elsif params[:min_price] && !params[:max_price]
-               Item.where('unit_price >= ?', params[:min_price]).order(:name).first
-             elsif params[:max_price]
-               Item.where('unit_price <= ?', params[:max_price]).order(:name).first
-             else
-               Item.where(unit_price: params[:min_price]..params[:max_price]).order(:name).first
-             end
+      item = Item.find_by_params(params[:name], params[:min_price], params[:max_price])
       render json: ItemSerializer.render(item), status: :ok if item
       render json: ItemSerializer.render_empty, status: :not_found unless item
     else
