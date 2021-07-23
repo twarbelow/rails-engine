@@ -1,12 +1,12 @@
 class Api::V1::ItemsController < ApplicationController
   def index
-    per_page = (params.fetch(:per_page, 20)).to_i
-    page = (params.fetch(:page, 0)).to_i
-    if page == 0
-      items = Item.limit(per_page)
-    else
-      items = Item.limit(per_page).offset((page - 1)* per_page)
-    end
+    per_page = params.fetch(:per_page, 20).to_i
+    page = params.fetch(:page, 0).to_i
+    items = if page.zero?
+              Item.limit(per_page)
+            else
+              Item.limit(per_page).offset((page - 1) * per_page)
+            end
     render json: ItemSerializer.render_all(items), status: :ok
   end
 
@@ -50,7 +50,6 @@ class Api::V1::ItemsController < ApplicationController
       render status: :bad_request
     end
   end
-
 
   private
 
